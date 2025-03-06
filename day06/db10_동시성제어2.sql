@@ -1,6 +1,6 @@
 START TRANSACTION;
 
-SELECT * FROM Book
+SELECT * FROM Book;
 
 UPDATE Book SET
        price = 48000
