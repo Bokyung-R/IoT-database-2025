@@ -1,62 +1,63 @@
 -- 7-1 계절학기 테이블
-DROP TABLE IF exists Summers; -- 기존 테이블이 존재하면 삭제
+DROP TABLE IF EXISTS Summer;  -- 기존테이블이 존재하면 삭제
 
 -- 계절학기 테이블 생성
-create table Summer(
-	sid 	integer,
-    class	varchar(20),
-    price 	integer
+CREATE TABLE Summer (
+	sid		INTEGER,
+    class	VARCHAR(20),
+    price	INTEGER
 );
 
---
-select * from Summer;
+-- 데이터 확인
+SELECT * FROM Summer;
 
--- 기본 데이터 추가(MySQ에서는 한번에 다중데이터 insert 가능)
-insert into Summer values(100,'JAVA',20000),(150,'PYTHON',15000),(200,'C',10000),(250,'JAVA',20000);
+-- 기본데이터 추가(MySQL에서 한번에 다중데이터 INSERT)
+INSERT INTO Summer VALUES (100, 'JAVA', 20000),(150, 'PYTHON', 15000),(200, 'C', 10000),(250, 'JAVA', 20000);
 
--- 계절학기듣는 학생의 학번과 수강과목
-select sid
-	 , class
-  from Summer;
+
+-- 계절학기 듣는 학생의 학번과 수강과목
+SELECT sid
+     , class 
+  FROM Summer;
   
--- C 강좌 수강료는?
-select price
-  from Summer
- where class Like '%C%';
+-- C강좌 수강료는?
+SELECT price
+  FROM Summer 
+ WHERE class LIKE '%C%';
  
--- 수강료가 가장 비싼 과목은?
-select distinct class
-  from Summer
- where price = ( select max(price)
-					from Summer
-                    );
-                    
+-- 수강료가 가장 비싼 과목은
+SELECT DISTINCT(class)
+  FROM Summer
+ WHERE price = (SELECT MAX(price)
+				  FROM Summer);
+                  
 -- 계절학기 학생수와 수강료 총액
-select count(*) as '학생수'
-	 , sum(price) as '수강료 총액'
-  from Summer;
+SELECT COUNT(*) AS '학생수'
+     , SUM(price) AS '수강료총액'
+  FROM Summer;
   
-/* 이상현상(anormaly) */
- -- 삭제 이상
-delete from Summer where sid = 200;
+/* 이상현상(abnormal) */
+-- 삭제이상
+DELETE FROM Summer WHERE sid = 200;
 
--- C 강좌 수강료를 찾을 수 없다
-select price
-  from Summer
- where class Like '%C%';
+-- C강좌 수강료를 찾을 수 없다
+SELECT price
+  FROM Summer 
+ WHERE class LIKE '%C%';
  
-/* 삽입 이상 */
-insert into Summer values(null,'C++', 25000);
+-- 삽입이상
+INSERT INTO Summer VALUES (NULL, 'C++', 25000);
 
-select count(*) from Summer;
-
-select count(sid) from Summer;
-
-/* 수정이상 */
-update Summer set
+SELECT COUNT(*) 
+  FROM Summer;
+  
+SELECT COUNT(sid)
+  FROM Summer;
+  
+-- 수정이상
+UPDATE Summer SET
  price = 15000
- where sid = 100;
+ WHERE sid = 100;
  
 -- 
-delete from Summer ;
- 
+DELETE FROM Summer;

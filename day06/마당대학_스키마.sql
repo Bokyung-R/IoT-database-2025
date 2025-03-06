@@ -29,8 +29,7 @@ CREATE TABLE IF NOT EXISTS `madanguniv`.`Professor` (
   `rank` VARCHAR(20) NOT NULL,
   `speciality` VARCHAR(40) NULL,
   PRIMARY KEY (`ssn`))
-ENGINE = InnoDB
-COMMENT = '			';
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -60,17 +59,17 @@ CREATE TABLE IF NOT EXISTS `madanguniv`.`Graduate` (
   `age` INT NULL,
   `deg_grog` VARCHAR(45) NULL,
   `dno` INT NOT NULL,
-  `Graduate_ssn` INT NOT NULL,
+  `graduatessn` INT NOT NULL,
   PRIMARY KEY (`ssn`),
   INDEX `fk_Graduate_Dept1_idx` (`dno` ASC) VISIBLE,
-  INDEX `fk_Graduate_Graduate1_idx` (`Graduate_ssn` ASC) VISIBLE,
+  INDEX `fk_Graduate_Graduate1_idx` (`graduatessn` ASC) VISIBLE,
   CONSTRAINT `fk_Graduate_Dept1`
     FOREIGN KEY (`dno`)
     REFERENCES `madanguniv`.`Dept` (`dno`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Graduate_Graduate1`
-    FOREIGN KEY (`Graduate_ssn`)
+    FOREIGN KEY (`graduatessn`)
     REFERENCES `madanguniv`.`Graduate` (`ssn`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -99,20 +98,20 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `madanguniv`.`work_Dept`
+-- Table `madanguniv`.`work_dept`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `madanguniv`.`work_Dept` (
+CREATE TABLE IF NOT EXISTS `madanguniv`.`work_dept` (
   `professorssn` INT NOT NULL,
   `dno` INT NOT NULL,
-  `pct_time` INT NOT NULL COMMENT '교수참여 백분율',
+  `pct_time` INT NOT NULL COMMENT '교수참여백분율',
   PRIMARY KEY (`professorssn`, `dno`),
-  INDEX `fk_work_Dept_Dept1_idx` (`dno` ASC) VISIBLE,
-  CONSTRAINT `fk_work_Dept_Professor1`
+  INDEX `fk_work_dept_Dept1_idx` (`dno` ASC) VISIBLE,
+  CONSTRAINT `fk_work_dept_Professor1`
     FOREIGN KEY (`professorssn`)
     REFERENCES `madanguniv`.`Professor` (`ssn`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_work_Dept_Dept1`
+  CONSTRAINT `fk_work_dept_Dept1`
     FOREIGN KEY (`dno`)
     REFERENCES `madanguniv`.`Dept` (`dno`)
     ON DELETE NO ACTION
